@@ -1,10 +1,68 @@
-<h2>Welcome to DAPP - Store and Transfer Money 2</h2>
-<br>
-<form action = "/store_money" method="post">
-    <input type="submit" value="Store Money">
-</form>
-<br>
-<form action = "/transfer_money" method="post">
-    <input type="submit" value="Transfer Money">
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAPP - Store and Transfer Money</title>
+    <style>
+        body {
+            background-color: #0d0d0d;
+            color: #e0e0e0;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
 
+        .container {
+            text-align: center;
+            background-color: #1c1c1c;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            color: #00ff99;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin: 20px 0;
+        }
+
+        input[type="submit"] {
+            background-color: #00ff99;
+            color: #0d0d0d;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #00cc7a;
+        }
+
+        input[type="submit"]:active {
+            background-color: #00b36a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome to DAPP - Store and Transfer Money</h2>
+        <form action="/store_money" method="post">
+            <input type="submit" value="Store Money">
+        </form>
+        <form action="/transfer_money" method="post">
+            <input type="submit" value="Transfer Money">
+        </form>
+    </div>
+</body>
+</html>
