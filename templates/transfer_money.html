@@ -1,102 +1,194 @@
-<h2>Welcome to transfer money v1</h2>
-
-<input type="text" id="payer_id"  placeholder="Please enter payer address">
-<br><br>
-<input type="text" id="payee_id"  placeholder="Please enter payee address">
-<br><br>
-<input type="number" id="amount_id"  placeholder="Please enter amount">
-<br><br>
-<button class="btn" onclick="transfer()">Trasfer Money</button>
-<br><br>
-<button class="btn" onclick="view_transaction()">View Transaction</button>
-<p id="view_payer_id"></p>
-<p id="view_payee_id"></p>
-<p id="view_amount_id"></p>
-
-<form action="/" method="post">
-    <input type="submit" value="Main">
-</form>
-
-<script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
-<script>
-    const contract_address = "0x988096cd402d444d2b8c29cbea643c5a3bed1555";
-    const contract_abi = [
-        {
-            "inputs": [],
-            "stateMutability": "nonpayable",
-            "type": "constructor"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "amount_to_transfer",
-                    "type": "uint256"
-                },
-                {
-                    "internalType": "address",
-                    "name": "payer_add",
-                    "type": "address"
-                },
-                {
-                    "internalType": "address",
-                    "name": "payee_add",
-                    "type": "address"
-                }
-            ],
-            "name": "weixin",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "name": "check_transaction",
-            "outputs": [
-                {
-                    "internalType": "address",
-                    "name": "",
-                    "type": "address"
-                },
-                {
-                    "internalType": "address",
-                    "name": "",
-                    "type": "address"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAPP - Transfer Money</title>
+    <style>
+        body {
+            background-color: #0d0d0d;
+            color: #e0e0e0;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
-    ];
 
-    const web3 = new Web3(Web3.givenProvider);
-    console.log(web3);
-    const contract = new web3.eth.Contract(contract_abi,contract_address);
-    console.log(contract);
+        .container {
+            text-align: center;
+            background-color: #1c1c1c;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 400px;
+        }
 
-    async function transfer(){
-        const accounts = await web3.eth.requestAccounts();
-        console.log(accounts);
-        const payer_address = document.getElementById("payer_id").value;
-        const payee_address = document.getElementById("payee_id").value;
-        const amount = document.getElementById("amount_id").value;
-        console.log(payer_address,payee_address,amount);
-        await contract.methods.weixin(amount,payer_address,payee_address).send({from:accounts[0]});
-    }
+        h2 {
+            color: #00ff99;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
 
-    async function view_transaction() {
-        const result = await contract.methods.check_transaction().call();
-        const payer_address = result[0];
-        const payee_address = result[1];
-        const amount = result[2];
+        input[type="text"], input[type="number"] {
+            background-color: #2b2b2b;
+            border: 1px solid #00ff99;
+            color: #e0e0e0;
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
 
-        document.getElementById("view_payer_id").innerText = "Payer Address : " + payer_address;
-        document.getElementById("view_payee_id").innerText = "Payee Address : " + payee_address;
-        document.getElementById("view_amount_id").innerText = "Amount : " + amount;
-    }
-</script>
+        .btn {
+            background-color: #00ff99;
+            color: #0d0d0d;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #00cc7a;
+        }
+
+        .btn:active {
+            background-color: #00b36a;
+        }
+
+        p {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+
+        form {
+            margin-top: 30px;
+        }
+
+        input[type="submit"] {
+            background-color: #00ff99;
+            color: #0d0d0d;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #00cc7a;
+        }
+
+        input[type="submit"]:active {
+            background-color: #00b36a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome to Transfer Money v1</h2>
+
+        <input type="text" id="payer_id" placeholder="Please enter payer address">
+        <input type="text" id="payee_id" placeholder="Please enter payee address">
+        <input type="number" id="amount_id" placeholder="Please enter amount">
+
+        <button class="btn" onclick="transfer()">Transfer Money</button>
+        <button class="btn" onclick="view_transaction()">View Transaction</button>
+
+        <p id="view_payer_id"></p>
+        <p id="view_payee_id"></p>
+        <p id="view_amount_id"></p>
+
+        <form action="/" method="post">
+            <input type="submit" value="Main">
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+    <script>
+        const contract_address = "0x988096cd402d444d2b8c29cbea643c5a3bed1555";
+        const contract_abi = [
+            {
+                "inputs": [],
+                "stateMutability": "nonpayable",
+                "type": "constructor"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "amount_to_transfer",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "payer_add",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "payee_add",
+                        "type": "address"
+                    }
+                ],
+                "name": "weixin",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "check_transaction",
+                "outputs": [
+                    {
+                        "internalType": "address",
+                        "name": "",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            }
+        ];
+
+        const web3 = new Web3(Web3.givenProvider);
+        const contract = new web3.eth.Contract(contract_abi, contract_address);
+
+        async function transfer() {
+            const accounts = await web3.eth.requestAccounts();
+            const payer_address = document.getElementById("payer_id").value;
+            const payee_address = document.getElementById("payee_id").value;
+            const amount = document.getElementById("amount_id").value;
+            await contract.methods.weixin(amount, payer_address, payee_address).send({from: accounts[0]});
+        }
+
+        async function view_transaction() {
+            const result = await contract.methods.check_transaction().call();
+            const payer_address = result[0];
+            const payee_address = result[1];
+            const amount = result[2];
+
+            document.getElementById("view_payer_id").innerText = "Payer Address: " + payer_address;
+            document.getElementById("view_payee_id").innerText = "Payee Address: " + payee_address;
+            document.getElementById("view_amount_id").innerText = "Amount: " + amount;
+        }
+    </script>
+</body>
+</html>
