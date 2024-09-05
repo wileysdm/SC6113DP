@@ -56,11 +56,23 @@
 </head>
 <body>
     <div class="container">
-        <h2>Welcome to DAPP - Store and Transfer Money May I know your name?</h2>
-        <form action="/main" method="post">
-            <input type="text" name="q">
-            <input type="submit" value="Enter">
+        <h2>Admin</h2>
+        <br>
+        <form action="/viewdb" method="post">
+            <input type="submit" value="view database">
         </form>
+        <br>
+        <form action="/deletedb" method="post">
+            <input type="submit" value="delete database">
+        </form>
+        <br>
+        <form action="/main" method="post">
+            <input type="submit" value="Main">    
+        </form>
+        <form action="/" method="post">
+            <input type="submit" value="Logout">
+        </form>
+        <br>
     </div>
 </body>
 </html>

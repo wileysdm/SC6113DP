@@ -56,12 +56,18 @@
 </head>
 <body>
     <div class="container">
-        <h2>W{{r}} How can I help you today?</h2>
+        <h2> {{r}} How can I help you today?</h2>
         <form action="/store_money" method="post">
             <input type="submit" value="Store Money">
         </form>
         <form action="/transfer_money" method="post">
             <input type="submit" value="Transfer Money">
+        </form>
+        <form action="/admin" method="post">
+            <input type="submit" value="admin">
+        </form>
+        <form action="/" method="post">
+            <input type="submit" value="Logout">
         </form>
     </div>
 </body>
